@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import store from '@/store'
 export default {
   data () {
     const checkMoile = (rule, value, callback) => {
@@ -46,19 +47,30 @@ export default {
   methods: {
     login () {
       // 对整个表单进行校验
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          this.$http
+          /* this.$http
             .post(
               'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
               this.loginForm
             )
             .then(res => {
+              // 存储用户信息
+              store.setUser(res.data.data)
               this.$router.push('/')
             })
             .catch(() => {
               this.$message.error('手机号或验证码不正确')
-            })
+            }) */
+          try {
+            const {
+              data: { data }
+            } = await this.$http.post('authorizations', this.loginForm)
+            store.setUser(data)
+            this.$router.push('/')
+          } catch (error) {
+            this.$message.error('手机号或验证码错误')
+          }
         }
       })
     }

@@ -45,19 +45,15 @@
       <el-header>
         <span class="el-icon-s-fold" @click="toggleMenu"></span>
         <span class="text">江苏传智播客科技教育有限公司</span>
-        <el-dropdown>
+        <el-dropdown @command="changeMenu">
           <span class="el-dropdown-link" style=" cursor: pointer;">
-            <img src="../../assets/images/avatar.jpg" alt />
-            浅殇愫暮
+            <img :src="photo" alt />
+            {{name}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <span class="el-icon-setting"></span>&nbsp;个人设置
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <span class="el-icon-goods"></span>&nbsp;退出登录
-            </el-dropdown-item>
+            <el-dropdown-item command="setting" icon="el-icon-setting">个人设置</el-dropdown-item>
+            <el-dropdown-item command="logout" icon="el-icon-goods">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -69,16 +65,35 @@
 </template>
 
 <script>
+import store from '@/store'
 export default {
   data () {
     return {
-      isCollapse: false
+      isCollapse: false,
+      name: '',
+      photo: ''
     }
   },
   methods: {
     toggleMenu () {
       this.isCollapse = !this.isCollapse
+    },
+    setting () {
+      this.$router.push('/setting')
+    },
+    logout () {
+      store.removeUser()
+      this.$router.push('/')
+    },
+    changeMenu (allMsg) {
+      this[allMsg]()
     }
+  },
+  created () {
+    // 本地获取用户信息
+    const user = store.getUser()
+    this.name = user.name
+    this.photo = user.photo
   }
 }
 </script>
