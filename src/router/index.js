@@ -7,6 +7,7 @@ import Article from '@/views/article'
 import NotFound from '@/views/404'
 import store from '@/store'
 import Setting from '@/views/setting'
+import Image from '@/views/image'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -22,7 +23,8 @@ const router = new VueRouter({
       children: [
         { path: '/', name: 'welcome', component: Welcome },
         { path: '/article', name: 'Article', component: Article },
-        { path: '/setting', name: 'Setting', component: Setting }
+        { path: '/setting', name: 'Setting', component: Setting },
+        { path: '/image', name: 'Image', component: Image }
       ]
     },
     { path: '*', name: '404', component: NotFound }
