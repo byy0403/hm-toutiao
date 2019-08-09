@@ -114,7 +114,7 @@ export default {
       const {
         data: { data }
       } = await this.$http.put(`user/images/${item.id}`, {
-        collect: item.is_collected
+        collect: !item.is_collected
       })
       this.$message.success(data.collect ? '收藏成功' : '取消收藏成功')
       // 改变当前图片状态
