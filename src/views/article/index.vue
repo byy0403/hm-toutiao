@@ -155,7 +155,7 @@ export default {
 
   created () {
     // 获取下拉选项数据
-    this.getChannelOptions()
+    // this.getChannelOptions()
     // 获取文章列表数据
     this.getArticles()
   },
